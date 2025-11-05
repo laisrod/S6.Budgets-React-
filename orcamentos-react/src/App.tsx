@@ -40,6 +40,8 @@ export default function App() {
 
   const [total, setTotal] = useState<number>(0)
 
+  const websiteAdditionalCost = (websitePages + websiteLanguages) * 30
+
   useEffect(() => {
     const calculatedTotal = selectedIds.reduce((sum, id) => {
       const service = SERVICES.find(s => s.id === id)

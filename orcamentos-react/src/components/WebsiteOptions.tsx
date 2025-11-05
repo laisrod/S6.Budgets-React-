@@ -11,6 +11,8 @@ export default function WebsiteOptions({
   onPagesChange, 
   onLanguagesChange 
 }: WebsiteOptionsProps) {
+  const websiteCost = (pages + languages) * 30
+
   return (
     <div className="website-options">
       <h3>Opções do Website</h3>
@@ -39,6 +41,9 @@ export default function WebsiteOptions({
             onChange={(e) => onLanguagesChange(Number(e.target.value) || 0)}
           />
         </div>
+      </div>
+      <div className="website-cost">
+        <span>Custo adicional do website: €{websiteCost}</span>
       </div>
     </div>
   );
