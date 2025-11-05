@@ -20,12 +20,14 @@ export default function App() {
     setSelectedIds(prev => checked ? [...prev, id] : prev.filter(i => i !== id))
   }
 
-  const total = selectedIds.reduce((sum, id) => {
-    const service = SERVICES.find(s => s.id === id)
-    return sum + (service?.price || 0)
-  }, 0)
+  const [total, setTotal] = useState<number>(0)
 
   useEffect(() => {
+    const calculatedTotal = selectedIds.reduce((sum, id) => {
+      const service = SERVICES.find(s => s.id === id)
+      return sum + (service?.price || 0)
+    }, 0)
+    setTotal(calculatedTotal)
     localStorage.setItem('selectedServices', JSON.stringify(selectedIds))
   }, [selectedIds])
 
