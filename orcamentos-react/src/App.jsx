@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { SERVICES } from './constants/services'
 import ServiceCheckbox from './components/ServiceCheckbox'
@@ -23,11 +23,11 @@ function App() {
     })
   }
 
-  const total = useMemo(() => {
-    return SERVICES.filter((s) => selectedIds.includes(s.id)).reduce((sum, s) => sum + s.price, 0)
-  }, [selectedIds])
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
+    const newTotal = SERVICES.filter((s) => selectedIds.includes(s.id)).reduce((sum, s) => sum + s.price, 0)
+    setTotal(newTotal)
     try {
       localStorage.setItem('selectedServices', JSON.stringify(selectedIds))
     } catch {
