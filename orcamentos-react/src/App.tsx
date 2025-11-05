@@ -43,15 +43,19 @@ export default function App() {
   const websiteAdditionalCost = (websitePages + websiteLanguages) * 30
 
   useEffect(() => {
-    const calculatedTotal = selectedIds.reduce((sum, id) => {
+    const servicesTotal = selectedIds.reduce((sum, id) => {
       const service = SERVICES.find(s => s.id === id)
       return sum + (service?.price || 0)
     }, 0)
+    
+    const isWebsiteSelected = selectedIds.includes('website')
+    const calculatedTotal = servicesTotal + (isWebsiteSelected ? websiteAdditionalCost : 0)
+    
     setTotal(calculatedTotal)
     localStorage.setItem('selectedServices', JSON.stringify(selectedIds))
     localStorage.setItem('websitePages', JSON.stringify(websitePages))
     localStorage.setItem('websiteLanguages', JSON.stringify(websiteLanguages))
-  }, [selectedIds, websitePages, websiteLanguages])
+  }, [selectedIds, websitePages, websiteLanguages, websiteAdditionalCost])
 
   return (
     <div className="container">
