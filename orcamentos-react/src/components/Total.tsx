@@ -1,4 +1,8 @@
-export default function Total({ amount }) {
+interface TotalProps {
+  amount: number;
+}
+
+export default function Total({ amount }: TotalProps) {
   return (
     <div className="total">
       <span>Total:</span>
@@ -6,5 +10,4 @@ export default function Total({ amount }) {
     </div>
   );
 }
-
 
