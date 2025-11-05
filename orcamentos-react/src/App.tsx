@@ -3,6 +3,7 @@ import './App.css'
 import { SERVICES } from './constants/services'
 import ServiceCheckbox from './components/ServiceCheckbox'
 import Total from './components/Total'
+import WebsiteOptions from './components/WebsiteOptions'
 
 export default function App() {
   const [selectedIds, setSelectedIds] = useState<string[]>(
@@ -41,6 +42,15 @@ export default function App() {
   const [total, setTotal] = useState<number>(0)
 
   const websiteAdditionalCost = (websitePages + websiteLanguages) * 30
+  const isWebsiteSelected = selectedIds.includes('website')
+
+  const handleWebsiteToggle = (id: string, checked: boolean) => {
+    toggleService(id, checked)
+    if (!checked && id === 'website') {
+      setWebsitePages(1)
+      setWebsiteLanguages(1)
+    }
+  }
 
   useEffect(() => {
     const servicesTotal = selectedIds.reduce((sum, id) => {
@@ -48,7 +58,6 @@ export default function App() {
       return sum + (service?.price || 0)
     }, 0)
     
-    const isWebsiteSelected = selectedIds.includes('website')
     const calculatedTotal = servicesTotal + (isWebsiteSelected ? websiteAdditionalCost : 0)
     
     setTotal(calculatedTotal)
@@ -66,10 +75,18 @@ export default function App() {
             key={service.id}
             {...service}
             checked={selectedIds.includes(service.id)}
-            onChange={toggleService}
+            onChange={service.id === 'website' ? handleWebsiteToggle : toggleService}
           />
         ))}
       </div>
+      {isWebsiteSelected && (
+        <WebsiteOptions
+          pages={websitePages}
+          languages={websiteLanguages}
+          onPagesChange={setWebsitePages}
+          onLanguagesChange={setWebsiteLanguages}
+        />
+      )}
       <Total amount={total} />
     </div>
   )
