@@ -1,5 +1,10 @@
-export default function Total() {
-  return null;
+export default function Total({ amount }) {
+  return (
+    <div className="total">
+      <span>Total:</span>
+      <strong>€ {amount}</strong>
+    </div>
+  );
 }
 
 
