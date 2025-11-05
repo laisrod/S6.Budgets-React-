@@ -1,4 +1,12 @@
-export default function ServiceCheckbox({ id, label, price, checked, onChange }) {
+interface ServiceCheckboxProps {
+  id: string;
+  label: string;
+  price: number;
+  checked: boolean;
+  onChange: (id: string, checked: boolean) => void;
+}
+
+export default function ServiceCheckbox({ id, label, price, checked, onChange }: ServiceCheckboxProps) {
   return (
     <label className="service-option">
       <input
@@ -12,5 +20,4 @@ export default function ServiceCheckbox({ id, label, price, checked, onChange })
     </label>
   );
 }
-
 
