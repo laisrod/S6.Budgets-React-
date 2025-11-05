@@ -20,6 +20,24 @@ export default function App() {
     setSelectedIds(prev => checked ? [...prev, id] : prev.filter(i => i !== id))
   }
 
+  const [websitePages, setWebsitePages] = useState<number>(() => {
+    try {
+      const raw = localStorage.getItem('websitePages')
+      return raw ? Number(JSON.parse(raw)) : 1
+    } catch {
+      return 1
+    }
+  })
+
+  const [websiteLanguages, setWebsiteLanguages] = useState<number>(() => {
+    try {
+      const raw = localStorage.getItem('websiteLanguages')
+      return raw ? Number(JSON.parse(raw)) : 1
+    } catch {
+      return 1
+    }
+  })
+
   const [total, setTotal] = useState<number>(0)
 
   useEffect(() => {
@@ -29,7 +47,9 @@ export default function App() {
     }, 0)
     setTotal(calculatedTotal)
     localStorage.setItem('selectedServices', JSON.stringify(selectedIds))
-  }, [selectedIds])
+    localStorage.setItem('websitePages', JSON.stringify(websitePages))
+    localStorage.setItem('websiteLanguages', JSON.stringify(websiteLanguages))
+  }, [selectedIds, websitePages, websiteLanguages])
 
   return (
     <div className="container">
