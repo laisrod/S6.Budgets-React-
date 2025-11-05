@@ -1,34 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useMemo, useState } from 'react'
 import './App.css'
+import { SERVICES } from './constants/services'
+import ServiceCheckbox from './components/ServiceCheckbox'
+import Total from './components/Total'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedIds, setSelectedIds] = useState([])
+
+  function handleToggle(serviceId, isChecked) {
+    setSelectedIds((prev) => {
+      if (isChecked) {
+        return [...prev, serviceId]
+      }
+      return prev.filter((id) => id !== serviceId)
+    })
+  }
+
+  const total = useMemo(() => {
+    return SERVICES.filter((s) => selectedIds.includes(s.id)).reduce((sum, s) => sum + s.price, 0)
+  }, [selectedIds])
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <h1>Orçamento de Serviços</h1>
+      <div className="services">
+        {SERVICES.map((service) => (
+          <ServiceCheckbox
+            key={service.id}
+            id={service.id}
+            label={service.label}
+            price={service.price}
+            checked={selectedIds.includes(service.id)}
+            onChange={handleToggle}
+          />)
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <Total amount={total} />
+    </div>
   )
 }
 
