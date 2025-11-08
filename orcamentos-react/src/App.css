@@ -84,3 +84,93 @@
   border-top: 2px solid #e5e5e5;
   font-size: 1.125rem;
 }
+
+.website-options {
+  padding: 1.5rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-top: 1rem;
+}
+
+.website-options h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+}
+
+.website-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.input-with-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 200px;
+}
+
+.input-with-buttons input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.input-with-buttons input:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.increment-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  background-color: #5065c6;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.increment-btn:hover {
+  background-color: #646cff;
+  color: #fff;
+  border-color: #646cff;
+}
+
+.increment-btn:active {
+  transform: scale(0.95);
+}
+
+.increment-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.website-cost {
+  padding-top: 1rem;
+  border-top: 1px solid #e5e5e5;
+  font-weight: 600;
+  color: #646cff;
+}
