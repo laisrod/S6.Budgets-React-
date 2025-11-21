@@ -1,3 +1,6 @@
+import Span from '../atoms/Span'
+import Strong from '../atoms/Strong'
+
 interface TotalProps {
   amount: number;
 }
@@ -5,8 +8,8 @@ interface TotalProps {
 export default function Total({ amount }: TotalProps) {
   return (
     <div className="total">
-      <span>Total:</span>
-      <strong>€ {amount}</strong>
+      <Span>Total:</Span>
+      <Strong>€ {amount}</Strong>
     </div>
   );
 }
