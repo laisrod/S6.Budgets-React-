@@ -1,12 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import App from '../../App';
 import '@testing-library/jest-dom';
 
 describe('App integration', () => {
   test('renders services and toggles website options', async () => {
     const user = userEvent.setup()
-    render(<App />)
+    
+    render(
+      <MemoryRouter initialEntries={['/app']}>
+        <App />
+      </MemoryRouter>
+    )
 
     expect(screen.getByText(/Orçamento de Serviços/i)).toBeInTheDocument()
     const websiteCheckbox = screen.getByRole('checkbox', { name: /Criar um site/i })
