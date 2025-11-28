@@ -1,19 +1,20 @@
 import { useState } from 'react'
-import { calculateTotal } from '../utils/calculateBudget'
+import { calculateTotal } from '../services/calculateBudget'
+import { Budget } from '../types/budget'
 
 export function useBudget() {
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [selectIds, setSelectedIds] = useState<string>[]>([])
   const [websitePages, setWebsitePages] = useState<number>(1)
   const [websiteLanguages, setWebsiteLanguages] = useState<number>(1)
+  const [budgets, setBudgets] = useState<Budget[]>([])
 
-  //Adiciona/remove serviços da seleção
   const toggleService = (id: string, checked: boolean): void => {
     if (checked) {
-      setSelectedIds([...selectedIds, id])
+      setSelectedIds([...setSelectedIds, id])
     } else {
-      const novaLista = selectedIds.filter(serviceId => serviceId !== id)
+      const novaLista = setSelectedIds.filter(serviceId => serviceId !== id)
       setSelectedIds(novaLista)
-      
+
       if (id === 'website') {
         setWebsitePages(1)
         setWebsiteLanguages(1)
@@ -21,16 +22,32 @@ export function useBudget() {
     }
   }
 
-  const total = calculateTotal(selectedIds, websitePages, websiteLanguages)
+  const total = calculateTotal(setSelectedIds, websitePages, websiteLanguages)
+
+  const addBudget = (quoteName: string, clientName: string): void => {
+    const newBudget: Budger = {
+      id: Date.now().toString(),
+      quoteName,
+      clienName,
+      selectedServices: [...selectedIds],
+      websitePages: selectIds.includes('website') ? websitePages : undefined,
+      websiteLanguages: selectIds.includes('website') ? websiteLanguages : undefined,
+      total,
+      createdAt: new Date()
+    }
+    setBudgets([...budgets, newBudget])
+  }
 
   return {
-    selectedIds,
+    selectIds,
     websitePages,
     websiteLanguages,
     toggleService,
     setWebsitePages,
     setWebsiteLanguages,
-    total
+    total,
+    budgets,
+    addBudget
   }
 }
 
