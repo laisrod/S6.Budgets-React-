@@ -1,8 +1,9 @@
 import ServiceCheckbox from '../components/organismos/ServiceCheckbox'
 import Total from '../components/organismos/Total'
 import WebsiteOptions from '../components/organismos/WebsiteOptions'
-import { SERVICES } from '../constants/services'
-import { useBudget } from '../hooks/useBudget'
+import QuoteForm from '../components/organismos/QuoteForm'
+import { SERVICES } from '../config/ContentService'
+import { useBudgetContext } from '../context/BudgetContext'
 import { Link } from 'react-router-dom'
 
 export default function Calculator() {
@@ -14,7 +15,8 @@ export default function Calculator() {
     setWebsitePages,
     setWebsiteLanguages,
     total,
-  } = useBudget()
+    addBudget
+  } = useBudgetContext()
 
   return (
     <div className="container">
@@ -48,6 +50,8 @@ export default function Calculator() {
       )}
 
       <Total amount={total} />
+
+      <QuoteForm onSubmit={addBudget} />
     </div>
   )
 }
