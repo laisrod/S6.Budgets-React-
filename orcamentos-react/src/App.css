@@ -383,4 +383,70 @@
   }
 }
 
+/* Campo de Busca */
+.search-container {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+}
+
+.search-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    padding: 0.75rem;
+  }
+  
+  .search-input {
+    font-size: 0.9rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .search-container {
+    background-color: #1a1a1a;
+    border-color: #333;
+  }
+  
+  .search-input {
+    background-color: #242424;
+    border-color: #333;
+    color: rgba(255, 255, 255, 0.87);
+  }
+  
+  .search-input:focus {
+    border-color: #646cff;
+  }
+  
+  .search-input::placeholder {
+    color: #666;
+  }
+}
+
 }
