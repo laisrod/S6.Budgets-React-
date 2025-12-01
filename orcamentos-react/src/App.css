@@ -320,4 +320,67 @@
   gap: 0.25rem;
 }
 
+/* Ordenação de Orçamentos */
+.budgets-list {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.budgets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.budgets-header h3 {
+  margin: 0;
+}
+
+.sort-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sort-buttons .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.budgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .budgets-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sort-buttons {
+    width: 100%;
+  }
+  
+  .sort-buttons .btn {
+    flex: 1;
+    min-width: 120px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .budgets-list {
+    background-color: #1a1a1a;
+    border-color: #333;
+  }
+}
+
 }
