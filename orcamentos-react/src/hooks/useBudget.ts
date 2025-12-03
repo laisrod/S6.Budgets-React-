@@ -1,53 +1,100 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { calculateTotal } from '../services/calculateBudget'
 import { Budget } from '../types/budget'
 
 export function useBudget() {
-  const [selectIds, setSelectedIds] = useState<string>[]>([])
+  // 1. Gerencia estados
+  const [selectedIds, setSelectedIds] = useState<string[]>([]) //exercicio 1 fase 2
   const [websitePages, setWebsitePages] = useState<number>(1)
   const [websiteLanguages, setWebsiteLanguages] = useState<number>(1)
-  const [budgets, setBudgets] = useState<Budget[]>([])
+  const [isAnnualDiscount, setIsAnnualDiscount] = useState<boolean>(false) //9.1.1 - estado para desconto anual
 
+  //ex5
+  const [budgets, setBudgets] = useState<Budget[]>(() => {
+    // Carrega do localStorage na inicialização
+    try {
+      const stored = localStorage.getItem('budgets')
+      if (stored) {
+        const parsed = JSON.parse(stored)
+        // Converter createdAt de string para Date
+        return parsed.map((budget: any) => ({
+          ...budget,
+          createdAt: new Date(budget.createdAt)
+        }))
+      }
+    } catch (error) {
+      console.error('Erro ao carregar budgets do localStorage:', error)
+    }
+    return []
+  })
+
+  // 6.1 Persiste no localStorage sempre que mudar
+  useEffect(() => {
+    try {
+      localStorage.setItem('budgets', JSON.stringify(budgets))
+    } catch (error) {
+      console.error('Erro ao salvar budgets no localStorage:', error)
+    }
+  }, [budgets])
+
+// 3. Funções para atualizar o estado
   const toggleService = (id: string, checked: boolean): void => {
     if (checked) {
-      setSelectedIds([...setSelectedIds, id])
+      //se checkbox foi marcado, adiciona ao array
+      setSelectedIds([...selectedIds, id])
     } else {
-      const novaLista = setSelectedIds.filter(serviceId => serviceId !== id)
+      //se checkbox foi desmarcado, remove do array
+      const novaLista = selectedIds.filter(serviceId => serviceId !== id)
       setSelectedIds(novaLista)
-
+      
       if (id === 'website') {
+        //se desmarcou website, reseta páginas e idiomas
         setWebsitePages(1)
         setWebsiteLanguages(1)
       }
     }
   }
 
-  const total = calculateTotal(setSelectedIds, websitePages, websiteLanguages)
-
-  const addBudget = (quoteName: string, clientName: string): void => {
-    const newBudget: Budger = {
-      id: Date.now().toString(),
-      quoteName,
-      clienName,
-      selectedServices: [...selectedIds],
-      websitePages: selectIds.includes('website') ? websitePages : undefined,
-      websiteLanguages: selectIds.includes('website') ? websiteLanguages : undefined,
-      total,
-      createdAt: new Date()
-    }
-    setBudgets([...budgets, newBudget])
+  //9.1.2 - função para alternar o desconto anual
+  const toggleAnnualDiscount = (): void => {
+    setIsAnnualDiscount(!isAnnualDiscount)
   }
 
+  // 5.1 - Calcula total
+  const total = calculateTotal(selectedIds, websitePages, websiteLanguages, isAnnualDiscount) //9.2.2 - passa o estado de desconto anual
+      
+
+  const addBudget = (quoteName: string, clientName: string): void => {
+    const originalTotal = calculateTotal(selectedIds, websitePages, websiteLanguages, false) //9.6.4 - calcula total sem desconto
+
+    const newBudget: Budget = {
+      id: Date.now().toString(),
+      quoteName,
+      clientName,
+      selectedServices: [...selectedIds],
+      websitePages: selectedIds.includes('website') ? websitePages : undefined,
+      websiteLanguages: selectedIds.includes('website') ? websiteLanguages : undefined,
+      createdAt: new Date(),
+      isAnnualDiscount: isAnnualDiscount,
+      originalTotal: isAnnualDiscount ? originalTotal : undefined,
+      total
+    }
+    
+    setBudgets([...budgets, newBudget]) // Atualiza estado
+  }
+
+  // 4 - retorna tudo que os componentes precisam
   return {
-    selectIds,
+    selectedIds,
     websitePages,
     websiteLanguages,
     toggleService,
     setWebsitePages,
     setWebsiteLanguages,
     total,
-    budgets,
-    addBudget
+    budgets, //exporta lista
+    addBudget, //exporta função para adicionar
+    isAnnualDiscount,
+    toggleAnnualDiscount //9.1.3 exporta função para alternar o desconto anual
   }
 }
-

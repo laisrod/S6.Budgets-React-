@@ -52,7 +52,17 @@ export default function BudgetCard({ budget }: BudgetCardProps) {
       </div>
 
       <div className="budget-total">
+        {budget.isAnnualDiscount && budget.originalTotal && (
+          <Span className="budget-card__original">
+            € {budget.originalTotal}
+          </Span>
+        )}
         <Strong>Total: € {budget.total}</Strong>
+        {budget.isAnnualDiscount && (
+          <Span className="budget-card__discount-badge">
+            20% OFF
+          </Span>
+        )}
       </div>
     </div>
   )
