@@ -1,6 +1,6 @@
-import { SERVICES } from '../constants/services'
+//Funções utilitárias
+import { SERVICES } from '../config/ContentService'
 
-//Soma preços dos serviços
 export function calculateServicesTotal(selectedIds: string[]): number {
   let total = 0
   for (let i = 0; i < selectedIds.length; i++) {
@@ -24,11 +24,13 @@ export function calculateWebsiteAdditional(
   }
   return (pages + languages) * 30
 }
-//soma total
+
+// 5.2 - Calcula total // 9.2.1 atualizar
 export function calculateTotal(
   selectedIds: string[],
   websitePages: number,
-  websiteLanguages: number
+  websiteLanguages: number,
+  isAnnualDiscount: boolean = false
 ): number {
   const servicesTotal = calculateServicesTotal(selectedIds)
   const isWebsiteSelected = selectedIds.includes('website')
@@ -37,6 +39,13 @@ export function calculateTotal(
     websitePages,
     websiteLanguages
   )
-  return servicesTotal + websiteAdditional
+  
+  let total = servicesTotal + websiteAdditional
+  
+  if (isAnnualDiscount) {
+    total = total * 0.8  // 20% de desconto = multiplicar por 0.8
+  }
+  
+  return total
 }
 

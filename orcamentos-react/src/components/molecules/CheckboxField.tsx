@@ -2,6 +2,7 @@ import Checkbox from '../atoms/Checkbox'
 import Label from '../atoms/Label'
 import Span from '../atoms/Span'
 
+//Checkbox + Label + Span
 interface CheckboxFieldProps {
   id: string;
   label: string;

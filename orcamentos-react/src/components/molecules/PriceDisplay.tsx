@@ -5,6 +5,7 @@ interface PriceDisplayProps {
   className?: string;
 }
 
+//Span + Strong
 export default function PriceDisplay({ price, className = '' }: PriceDisplayProps) {
   return (
     <Span className={`service-price ${className}`.trim()}>

@@ -7,4 +7,6 @@ export interface Budget {
   websiteLanguages?: number;
   total: number;
   createdAt: Date;
+  isAnnualDiscount?: boolean;
+  originalTotal?: number;
 }

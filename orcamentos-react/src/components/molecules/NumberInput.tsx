@@ -2,6 +2,7 @@ import Button from '../atoms/Button'
 import Input from '../atoms/Input'
 import Label from '../atoms/Label'
 
+//Input + Label + Button
 interface NumberInputProps {
   id: string;
   label: string;

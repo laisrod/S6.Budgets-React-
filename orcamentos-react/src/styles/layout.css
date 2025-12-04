@@ -1,0 +1,45 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+  text-align: left;
+}
+
+.budgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .budgets-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sort-buttons {
+    width: 100%;
+  }
+  
+  .sort-buttons .btn {
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  .search-container {
+    padding: 0.75rem;
+  }
+  
+  .search-input {
+    font-size: 0.9rem;
+  }
+}
+
