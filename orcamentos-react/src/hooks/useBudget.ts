@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { calculateTotal } from '../services/calculateBudget'
 import { Budget } from '../types/budget'
+import { useLocalStorage } from './useLocalStorage'
 
 export function useBudget() {
   // 1. Gerencia estados
@@ -9,33 +10,20 @@ export function useBudget() {
   const [websiteLanguages, setWebsiteLanguages] = useState<number>(1)
   const [isAnnualDiscount, setIsAnnualDiscount] = useState<boolean>(false) //9.1.1 - estado para desconto anual
 
-  //ex5
-  const [budgets, setBudgets] = useState<Budget[]>(() => {
-    // Carrega do localStorage na inicialização
-    try {
-      const stored = localStorage.getItem('budgets')
-      if (stored) {
-        const parsed = JSON.parse(stored)
-        // Converter createdAt de string para Date
-        return parsed.map((budget: any) => ({
-          ...budget,
-          createdAt: new Date(budget.createdAt)
-        }))
-      }
-    } catch (error) {
-      console.error('Erro ao carregar budgets do localStorage:', error)
-    }
-    return []
-  })
-
-  // 6.1 Persiste no localStorage sempre que mudar
-  useEffect(() => {
-    try {
-      localStorage.setItem('budgets', JSON.stringify(budgets))
-    } catch (error) {
-      console.error('Erro ao salvar budgets no localStorage:', error)
-    }
-  }, [budgets])
+  //lista de orçamentos - usando hook useLocalStorage (já faz carregar + salvar automaticamente)
+  const [budgetsRaw, setBudgetsRaw] = useLocalStorage<Budget[]>('budgets', [])
+  // Converter createdAt de string para Date (só recalcula quando budgetsRaw muda)
+  // useMemo é um hook que memoriza o resultado de uma função e retorna o resultado memorizado
+  //// Carrega do localStorage na inicialização e memoriza o resultado
+  const budgets = useMemo(() => 
+    budgetsRaw.map(budget => ({ //percorre cada orçamento em budgetsRaw
+      ...budget, //copia todas as propriedades do budget
+      createdAt: budget.createdAt instanceof Date //Conversão de Date
+      ? budget.createdAt // Já é Date? Mantém
+      : new Date(budget.createdAt) //converte string para Date se necessário
+    })),
+    [budgetsRaw] // so recalcula quando budgetsRaw muda
+  )
 
 // 3. Funções para atualizar o estado
   const toggleService = (id: string, checked: boolean): void => {
@@ -80,7 +68,7 @@ export function useBudget() {
       total
     }
     
-    setBudgets([...budgets, newBudget]) // Atualiza estado
+    setBudgetsRaw([...budgets, newBudget]) // Atualiza estado (useLocalStorage salva automaticamente)
   }
 
   // 4 - retorna tudo que os componentes precisam
