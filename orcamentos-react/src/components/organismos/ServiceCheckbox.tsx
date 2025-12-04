@@ -9,6 +9,7 @@ interface ServiceCheckboxProps {
   onChange: (id: string, checked: boolean) => void;
 }
 
+//CheckboxField + PriceDisplay
 export default function ServiceCheckbox({ id, label, price, checked, onChange }: ServiceCheckboxProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const estaMarcado = event.target.checked

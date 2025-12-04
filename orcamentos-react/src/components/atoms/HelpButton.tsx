@@ -12,9 +12,7 @@ export default function HelpButton({ onClick, ariaLabel = 'Abrir ajuda' }: HelpB
         aria-Label={ariaLabel}
         title="Clique para mais informações"
         >
-
             <span className="help-icon">ℹ️</span>
         </button>
-
     )
 }

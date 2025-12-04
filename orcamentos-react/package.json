@@ -1,16 +1,24 @@
 {
   "name": "orcamentos-react",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Aplicação de orçamentos de serviços digitais desenvolvida com React e TypeScript",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "clean": "rm -rf dist node_modules/.vite"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "dependencies": {
     "react": "^19.1.1",

@@ -52,6 +52,7 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
     )
   }
   // 8.1.3 - Se não houver orçamentos filtrados, exibe mensagem
+  // 8.2.3 - Campo de busca
   if (filteredBudgets.length === 0 && searchTerm !== '') {
     return (
       <div className="budgets-list">

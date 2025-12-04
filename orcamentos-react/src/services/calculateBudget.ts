@@ -1,7 +1,6 @@
 //Funções utilitárias
 import { SERVICES } from '../config/ContentService'
 
-//Soma preços dos serviços
 export function calculateServicesTotal(selectedIds: string[]): number {
   let total = 0
   for (let i = 0; i < selectedIds.length; i++) {
