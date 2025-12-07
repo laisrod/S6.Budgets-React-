@@ -1,11 +1,10 @@
 import Span from '../atoms/Span'
 import Strong from '../atoms/Strong'
 
-//9.4.1
 interface TotalProps {
-  amount: number
-  originalAmount?: number
-  isAnnualDiscount?: boolean
+  amount: number 
+  originalAmount?: number 
+  isAnnualDiscount?: boolean 
 }
 
 export default function Total({ amount, originalAmount, isAnnualDiscount }: TotalProps) {

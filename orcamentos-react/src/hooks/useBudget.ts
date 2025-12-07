@@ -1,60 +1,99 @@
-import { useState, useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { calculateTotal } from '../services/calculateBudget'
 import { Budget } from '../types/budget'
 import { useLocalStorage } from './useLocalStorage'
 
 export function useBudget() {
-  // 1. Gerencia estados
-  const [selectedIds, setSelectedIds] = useState<string[]>([]) //exercicio 1 fase 2
-  const [websitePages, setWebsitePages] = useState<number>(1)
-  const [websiteLanguages, setWebsiteLanguages] = useState<number>(1)
-  const [isAnnualDiscount, setIsAnnualDiscount] = useState<boolean>(false) //9.1.1 - estado para desconto anual
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  //lista de orçamentos - usando hook useLocalStorage (já faz carregar + salvar automaticamente)
+  //ler serviços selecionados
+  const selectedIds = useMemo(() => {
+    const services = searchParams.get('services')
+    return services ? services.split(',').filter(Boolean) : []
+  }, [searchParams])
+
+  //ler paginas e idiomas da url  
+  const websitePages = Number(searchParams.get('pages')) || 1
+  const websiteLanguages = Number(searchParams.get('languages')) || 1
+  //ler desconto anual da url
+  const isAnnualDiscount = searchParams.get('annual') === 'true'
+
+  //Gerenciar orçamentos salvos
   const [budgetsRaw, setBudgetsRaw] = useLocalStorage<Budget[]>('budgets', [])
-  // Converter createdAt de string para Date (só recalcula quando budgetsRaw muda)
-  // useMemo é um hook que memoriza o resultado de uma função e retorna o resultado memorizado
-  //// Carrega do localStorage na inicialização e memoriza o resultado
+  //converter datas de string para Date object
   const budgets = useMemo(() => 
-    budgetsRaw.map(budget => ({ //percorre cada orçamento em budgetsRaw
-      ...budget, //copia todas as propriedades do budget
-      createdAt: budget.createdAt instanceof Date //Conversão de Date
-      ? budget.createdAt // Já é Date? Mantém
-      : new Date(budget.createdAt) //converte string para Date se necessário
+    budgetsRaw.map(budget => ({ 
+      ...budget, 
+      createdAt: budget.createdAt instanceof Date 
+      ? budget.createdAt 
+      : new Date(budget.createdAt) 
     })),
-    [budgetsRaw] // so recalcula quando budgetsRaw muda
+    [budgetsRaw] 
   )
 
-// 3. Funções para atualizar o estado
-  const toggleService = (id: string, checked: boolean): void => {
+  //Função auxiliar — atualizar URL - declaração
+  const updateParams = useCallback((updates: Record<string, string | null>) => {
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev)
+      Object.entries(updates).forEach(([key, value]) => {  //Atualiza cada parâmetro
+        if (value === null || value === '') {
+          newParams.delete(key) //remove
+        } else {
+          newParams.set(key, value) //atualiza
+        }
+      })
+      return newParams //retorna novos parametros
+    })
+  }, [setSearchParams])
+
+  //Função para adicionar ou remover serviços
+  const toggleService = useCallback((id: string, checked: boolean): void => {
+    let newServices: string[] //array que guardara a nova lista
+    
     if (checked) {
-      //se checkbox foi marcado, adiciona ao array
-      setSelectedIds([...selectedIds, id])
+      newServices = [...selectedIds, id]
     } else {
-      //se checkbox foi desmarcado, remove do array
-      const novaLista = selectedIds.filter(serviceId => serviceId !== id)
-      setSelectedIds(novaLista)
-      
-      if (id === 'website') {
-        //se desmarcou website, reseta páginas e idiomas
-        setWebsitePages(1)
-        setWebsiteLanguages(1)
-      }
+      newServices = selectedIds.filter(serviceId => serviceId !== id)
     }
-  }
 
-  //9.1.2 - função para alternar o desconto anual
-  const toggleAnnualDiscount = (): void => {
-    setIsAnnualDiscount(!isAnnualDiscount)
-  }
+    //objeto que guardara as atualizações
+    const updates: Record<string, string | null> = {
+      services: newServices.length > 0 ? newServices.join(',') : null
+    }
 
-  // 5.1 - Calcula total
-  const total = calculateTotal(selectedIds, websitePages, websiteLanguages, isAnnualDiscount) //9.2.2 - passa o estado de desconto anual
+    //Se desmarcar website, remove pages e languages da URL
+    if (!checked && id === 'website') {
+      updates.pages = null
+      updates.languages = null
+    }
+
+    //atualiza a URL
+    updateParams(updates)
+  }, [selectedIds, updateParams])
+
+  //Função para atualizar o numero de paginas
+  const setWebsitePages = useCallback((pages: number): void => {
+    updateParams({ pages: pages > 1 ? String(pages) : null })
+  }, [updateParams])
+
+  //Função para atualizar o numero de idiomas
+  const setWebsiteLanguages = useCallback((languages: number): void => {
+    updateParams({ languages: languages > 1 ? String(languages) : null })
+  }, [updateParams])
+
+  //Função para alternar o desconto anual
+  const toggleAnnualDiscount = useCallback((): void => {
+    updateParams({ annual: !isAnnualDiscount ? 'true' : null })
+  }, [isAnnualDiscount, updateParams])
+
+  //Calcular o total
+  const total = calculateTotal(selectedIds, websitePages, websiteLanguages, isAnnualDiscount) 
       
-
+  //Função para adicionar um novo orçamento
   const addBudget = (quoteName: string, clientName: string): void => {
-    const originalTotal = calculateTotal(selectedIds, websitePages, websiteLanguages, false) //9.6.4 - calcula total sem desconto
-
+    const originalTotal = calculateTotal(selectedIds, websitePages, websiteLanguages, false) 
+    //criar o novo orçamento
     const newBudget: Budget = {
       id: Date.now().toString(),
       quoteName,
@@ -67,11 +106,11 @@ export function useBudget() {
       originalTotal: isAnnualDiscount ? originalTotal : undefined,
       total
     }
-    
-    setBudgetsRaw([...budgets, newBudget]) // Atualiza estado (useLocalStorage salva automaticamente)
+    //adicionar o novo orçamento à lista
+    setBudgetsRaw([...budgets, newBudget]) 
   }
 
-  // 4 - retorna tudo que os componentes precisam
+  //retornar os valores e funções
   return {
     selectedIds,
     websitePages,
@@ -80,9 +119,9 @@ export function useBudget() {
     setWebsitePages,
     setWebsiteLanguages,
     total,
-    budgets, //exporta lista
-    addBudget, //exporta função para adicionar
+    budgets, 
+    addBudget, 
     isAnnualDiscount,
-    toggleAnnualDiscount //9.1.3 exporta função para alternar o desconto anual
+    toggleAnnualDiscount 
   }
 }

@@ -4,25 +4,21 @@ import Label from '../atoms/Label'
 import Button from '../atoms/Button'
 
 
-//9.6.1
 interface QuoteFormProps {
   onSubmit: (quoteName: string, clientName: string) => void
   isAnnualDiscount: boolean
 }
 
 export default function QuoteForm({ onSubmit, isAnnualDiscount }: QuoteFormProps) {
-  // 1 - Estados locais do formulário
   const [quoteName, setQuoteName] = useState<string>('')
   const [clientName, setClientName] = useState<string>('')
   const [errors, setErrors] = useState({ quoteName: '', clientName: '' })
 
-  // 2 - Quando usuário clica em "Solicitar Orçamento"
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault() // Não recarrega página
+    event.preventDefault()
     
     const newErrors = { quoteName: '', clientName: '' }
     
-    // Valida se campos não estão vazios
     if (!quoteName.trim()) {
       newErrors.quoteName = 'Nome da cotação é obrigatório'
     }
@@ -34,13 +30,10 @@ export default function QuoteForm({ onSubmit, isAnnualDiscount }: QuoteFormProps
     setErrors(newErrors)
     
     if (quoteName.trim() && clientName.trim()) {
-      // Chama função que veio de fora (do hook)
       onSubmit(quoteName.trim(), clientName.trim())
-      // Limpa formulário para próximo orçamento
       setQuoteName('')
       setClientName('')
       setErrors({ quoteName: '', clientName: '' })
-      // Limpa erros para próximo orçamento
     }
   }
 
