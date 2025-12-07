@@ -3,7 +3,7 @@ import { Budget } from '../../types/budget'
 import BudgetCard from '../molecules/BudgetCard'
 import Button from '../atoms/Button'
 import Input from '../atoms/Input'
-import Label from '../atoms/Label' //8.2.1
+import Label from '../atoms/Label' 
 
 interface BudgetsListProps {
   budgets: Budget[] //recebe lista como props
@@ -11,38 +11,37 @@ interface BudgetsListProps {
 
 export default function BudgetsList({ budgets }: BudgetsListProps) {
 
-  const [sortedBudgets, setSortedBudgets] = useState<Budget[]>(budgets) //7.1 Armazena a lista de orçamentos ordenada
-  const [searchTerm, setSearchTerm] = useState<string>('') //8.1.1 Armazena termo de busca
+  const [sortedBudgets, setSortedBudgets] = useState<Budget[]>(budgets)
+  const [searchTerm, setSearchTerm] = useState<string>('')
 
-  useEffect(() => { //7.2 Sincroniza com lista original
+  useEffect(() => {
     setSortedBudgets(budgets)
   }, [budgets])
 
-  const handleSortByName = () => { //7.3 Ordena alfabeticamente
+  const handleSortByName = () => {
     const sorted = [...sortedBudgets].sort((a, b) => {
       return a.quoteName.localeCompare(b.quoteName)
     })
     setSortedBudgets(sorted)
   }
 
-  const handleSortByDate = () => { //7.4 Ordena por data
+  const handleSortByDate = () => {
     const sorted = [...sortedBudgets].sort((a, b) => {
       return b.createdAt.getTime() - a.createdAt.getTime()
     })
     setSortedBudgets(sorted)
   }
 
-  const handleResetOrder = () => { //7.5 Redefine ordem
+  const handleResetOrder = () => {
     setSortedBudgets(budgets)
   }
 
-  const filteredBudgets = sortedBudgets.filter(budget => { //8.1.2 Filtra orçamentos
+  const filteredBudgets = sortedBudgets.filter(budget => {
     const searchLower = searchTerm.toLowerCase() // converte para minuscula case-insensitive
     const quoteNameLower = budget.quoteName.toLowerCase() 
-    return quoteNameLower.includes(searchLower)// verifica se o nome contém o termo
+    return quoteNameLower.includes(searchLower)
   })
 
-  // 7.6 - Se não houver orçamentos, exibe mensagem
   if (budgets.length === 0) {
     return (
       <div className="budgets-list">
@@ -51,8 +50,6 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
       </div>
     )
   }
-  // 8.1.3 - Se não houver orçamentos filtrados, exibe mensagem
-  // 8.2.3 - Campo de busca
   if (filteredBudgets.length === 0 && searchTerm !== '') {
     return (
       <div className="budgets-list">
@@ -85,7 +82,7 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
       </div>
     )
   }
-  // 7.7 - Se houver orçamentos, exibe lista de orçamentos
+
   return (
     <div className="budgets-list">
 
@@ -115,7 +112,6 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
           </Button>
         </div>
       </div>
-      {/* 8.2.2 - Campo de busca */}
       <div className="search-container">
         <Label htmlFor="search-budget">Buscar orçamento:</Label>
         <Input
@@ -128,9 +124,8 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
         />
         
       </div>
-      <div className="budgets-grid">
-        {/* 2.1 - Mapeia cada orçamento para BudgetCard */}
-        {filteredBudgets.map(budget => ( //8.3 Mapeia orçamentos filtrados
+          <div className="budgets-grid">
+        {filteredBudgets.map(budget => (
           <BudgetCard key={budget.id} budget={budget} />
         ))}
       </div>

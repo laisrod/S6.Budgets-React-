@@ -7,7 +7,6 @@ import { SERVICES } from '../config/ContentService'
 import { useBudget } from '../hooks/useBudget'
 import { Link } from 'react-router-dom'
 import AnnualDiscountToggle from '../components/molecules/AnnualDiscountToggle' //9.5.1
-import { calculateTotal } from '../services/calculateBudget' //9.5.3 - importar função de cálculo
 
 export default function Calculator() {
   // 1 - Desestruturação do hook para pegar tudo que o hook exporta
@@ -19,13 +18,12 @@ export default function Calculator() {
     setWebsitePages,
     setWebsiteLanguages,
     total,
+    originalTotal,
     budgets,
     addBudget,
     isAnnualDiscount,
     toggleAnnualDiscount //9.5.2
   } = useBudget() //O hook useBudget gerencia todo o estado da aplicação
-
-  const originalTotal = calculateTotal(selectedIds, websitePages, websiteLanguages, false) //9.5.3 calcular total sem desconto
 
   // 2 - Retorna JSX da página
   return (

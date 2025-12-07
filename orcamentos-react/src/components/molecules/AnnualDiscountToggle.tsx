@@ -36,5 +36,3 @@ export default function AnnualDiscountToggleProps({
         </div>
     )
 }
-
-//9.3.1 novo componente

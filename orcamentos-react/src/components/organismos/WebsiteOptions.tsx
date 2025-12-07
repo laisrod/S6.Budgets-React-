@@ -12,7 +12,6 @@ interface WebsiteOptionsProps {
   onLanguagesChange: (languages: number) => void;
 }
 
-//NumberInput × 2 + Span
 export default function WebsiteOptions({ 
   pages, 
   languages, 
@@ -22,51 +21,29 @@ export default function WebsiteOptions({
   const websiteCost = (pages + languages) * 30
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
 
-  const handleIncrementPages = () => {
-    const novoValor = pages + 1
-    onPagesChange(novoValor)
-  }
+  const createIncrement = (current: number, onChange: (v: number) => void) => 
+    () => onChange(current + 1)
 
-  const handleDecrementPages = () => {
-    if (pages > 1) {
-      const novoValor = pages - 1
-      onPagesChange(novoValor)
-    }
-  }
+  const createDecrement = (current: number, onChange: (v: number) => void) => 
+    () => current > 1 && onChange(current - 1)
 
-  const handleIncrementLanguages = () => {
-    const novoValor = languages + 1
-    onLanguagesChange(novoValor)
-  }
+  const createInputChange = (onChange: (v: number) => void) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      const rawValue = event.target.value;
+      const numericValue = Number(rawValue);
+      const finalValue = numericValue >= 1 ? numericValue : 1;
+      
+      onChange(finalValue);
+    };
+  };
 
-  const handleDecrementLanguages = () => {
-    if (languages > 1) {
-      const novoValor = languages - 1
-      onLanguagesChange(novoValor)
-    }
-  }
+  const handleIncrementPages = createIncrement(pages, onPagesChange)
+  const handleDecrementPages = createDecrement(pages, onPagesChange)
+  const handlePagesInputChange = createInputChange(onPagesChange)
 
-  const handlePagesInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valorDigitado = event.target.value
-    const valorNumerico = Number(valorDigitado)
-    
-    if (valorNumerico >= 1) {
-      onPagesChange(valorNumerico)
-    } else {
-      onPagesChange(1)
-    }
-  }
-
-  const handleLanguagesInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const valorDigitado = event.target.value
-    const valorNumerico = Number(valorDigitado)
-    
-    if (valorNumerico >= 1) {
-      onLanguagesChange(valorNumerico)
-    } else {
-      onLanguagesChange(1)
-    }
-  }
+  const handleIncrementLanguages = createIncrement(languages, onLanguagesChange)
+  const handleDecrementLanguages = createDecrement(languages, onLanguagesChange)
+  const handleLanguagesInputChange = createInputChange(onLanguagesChange)
 
   const handleOpenHelp = () => {
     setIsHelpModalOpen(true)
