@@ -9,7 +9,7 @@ interface QuoteFormProps {
   isAnnualDiscount: boolean
 }
 
-export default function QuoteForm({ onSubmit, isAnnualDiscount }: QuoteFormProps) {
+export default function QuoteForm({ onSubmit }: QuoteFormProps) {
   const [quoteName, setQuoteName] = useState<string>('')
   const [clientName, setClientName] = useState<string>('')
   const [errors, setErrors] = useState({ quoteName: '', clientName: '' })
