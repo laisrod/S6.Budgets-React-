@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  const [value, setValue] = useState<T>(() => {
+  const [value, setValue] = useState<T>(() => { // Armazena o valor do localStorage
     try {
       const raw = localStorage.getItem(key)
       return raw != null ? (JSON.parse(raw) as T) : initialValue
@@ -19,4 +19,3 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   return [value, setValue] as const
 }
-

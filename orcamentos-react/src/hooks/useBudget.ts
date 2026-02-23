@@ -7,6 +7,7 @@ import { useLocalStorage } from './useLocalStorage'
 export function useBudget() {
   const [searchParams, setSearchParams] = useSearchParams()
 
+  //processando serviços selecionados
   const selectedIds = useMemo(() => {
     const services = searchParams.get('services')
     return services ? services.split(',').filter(Boolean) : []
@@ -16,8 +17,9 @@ export function useBudget() {
   const websiteLanguages = Number(searchParams.get('languages')) || 1
   const isAnnualDiscount = searchParams.get('annual') === 'true'
 
-  const [budgetsRaw, setBudgetsRaw] = useLocalStorage<Budget[]>('budgets', [])
-  const budgets = useMemo(() => 
+  // Armazena os orçamentos em localStorage
+  const [budgetsRaw, setBudgetsRaw] = useLocalStorage<Budget[]>('budgets', []) //  passo 1 useBudget usa useLocalStorage**
+  const budgets = useMemo(() => //passo 2 useBudget processa os dados
     budgetsRaw.map(budget => ({ 
       ...budget, 
       createdAt: budget.createdAt instanceof Date 

@@ -10,3 +10,9 @@ export interface Budget {
   isAnnualDiscount?: boolean;
   originalTotal?: number;
 }
+
+export interface Service {
+  id: string;
+  label: string;
+  price: number;
+}

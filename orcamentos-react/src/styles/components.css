@@ -1,3 +1,120 @@
+/* ===========================
+   Welcome Page
+   =========================== */
+
+/* Blobs decorativos de fundo */
+.welcome::before,
+.welcome::after {
+  content: '';
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  opacity: 0.35;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  animation: blob 18s ease-in-out infinite;
+}
+
+.welcome::before {
+  top: -10%;
+  right: -5%;
+  background: var(--color-primary);
+}
+
+.welcome::after {
+  bottom: -10%;
+  left: -8%;
+  background: var(--color-accent);
+  animation-delay: -7s;
+}
+
+/* Conteúdo da welcome fica acima dos blobs */
+.welcome > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Título */
+.welcome h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.25rem;
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInUp 0.7s ease-out both;
+}
+
+/* Descrição */
+.welcome p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.75;
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  color: var(--color-text-secondary);
+  animation: fadeInUp 0.7s ease-out 0.15s both;
+}
+
+/* Botão na welcome */
+.welcome .btn {
+  font-size: 1.1rem;
+  padding: 0.9rem 2.25rem;
+  animation: fadeInUp 0.7s ease-out 0.3s both;
+}
+
+/* Respeitar reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .welcome::before,
+  .welcome::after {
+    animation: none;
+  }
+  .welcome h1,
+  .welcome p,
+  .welcome .btn {
+    animation: none;
+  }
+}
+
+/* Welcome dark */
+@media (prefers-color-scheme: dark) {
+  .welcome h1 {
+    background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 50%, #e9d5ff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .welcome p {
+    color: var(--color-text-dark-light);
+  }
+
+  .welcome::before,
+  .welcome::after {
+    opacity: 0.2;
+  }
+}
+
+/* Welcome - mobile */
+@media (max-width: 480px) {
+  .welcome {
+    padding: 1.5rem;
+  }
+
+  .welcome .btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.85rem 1.5rem;
+  }
+}
+
+
+/* ===========================
+   Componentes Legados (logo, card, etc.)
+   =========================== */
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -36,6 +153,10 @@
   color: var(--color-text-muted);
 }
 
+
+/* ===========================
+   Serviços & Calculadora
+   =========================== */
 
 .services {
   display: flex;

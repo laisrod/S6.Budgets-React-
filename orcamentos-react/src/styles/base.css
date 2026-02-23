@@ -1,34 +1,79 @@
 :root {
-  --color-primary: #646cff;
-  --color-primary-hover: #535bf2;
-  --color-primary-dark: #5065c6;
-  --color-primary-light: rgba(100, 108, 255, 0.1);
-  
-  --color-bg: #f9f9f9;
-  --color-bg-white: white;
-  --color-bg-dark: #1a1a1a;
-  --color-bg-input-dark: #242424;
-  --color-bg-hover: #f0f0f0;
-  --color-bg-hover-dark: #333;
-  
-  --color-border: #e5e5e5;
-  --color-border-light: #d0d0d0;
-  --color-border-dark: #333;
-  
+  /* Cores Primárias */
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-dark: #4338ca;
+  --color-primary-light: rgba(99, 102, 241, 0.08);
+  --color-primary-glow: rgba(99, 102, 241, 0.25);
 
-  --color-text-muted: #888;
-  --color-text-placeholder: #999;
-  --color-text-dark: rgba(255, 255, 255, 0.87);
-  --color-text-dark-muted: #666;
-  --color-text-dark-light: #ccc;
-  --color-text-black: #000;
-  --color-text-gray: #666;
-  --color-text-white: #fff;
-  
+  /* Cores de Acento */
+  --color-accent: #8b5cf6;
+  --color-accent-light: rgba(139, 92, 246, 0.1);
+  --color-success: #22c55e;
+  --color-success-bg: rgba(34, 197, 94, 0.1);
 
-  --color-overlay: rgba(0, 0, 0, 0.5);
-  
-  
-  --color-shadow: rgba(0, 0, 0, 0.1);
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+  --gradient-bg: linear-gradient(135deg, #f0f0ff 0%, #e8e0ff 50%, #f5f0ff 100%);
+  --gradient-dark-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --gradient-btn: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --gradient-btn-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --gradient-shine: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+
+  /* Backgrounds */
+  --color-bg: #f8f9fc;
+  --color-bg-white: #ffffff;
+  --color-bg-dark: #1a1a2e;
+  --color-bg-input-dark: #242440;
+  --color-bg-hover: #f0f0f5;
+  --color-bg-hover-dark: #2a2a4a;
+  --color-bg-card: #ffffff;
+  --color-bg-elevated: #ffffff;
+
+  /* Bordas */
+  --color-border: #e5e7eb;
+  --color-border-light: #d1d5db;
+  --color-border-dark: #374151;
+
+  /* Texto */
+  --color-text: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-text-placeholder: #9ca3af;
+  --color-text-dark: rgba(255, 255, 255, 0.92);
+  --color-text-dark-muted: #6b7280;
+  --color-text-dark-light: #d1d5db;
+  --color-text-black: #111827;
+  --color-text-gray: #6b7280;
+  --color-text-white: #ffffff;
+
+  /* Overlay */
+  --color-overlay: rgba(0, 0, 0, 0.45);
+
+  /* Sombras */
+  --color-shadow: rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.16);
+  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.25);
+  --shadow-btn: 0 4px 14px rgba(99, 102, 241, 0.35);
+  --shadow-btn-hover: 0 8px 24px rgba(99, 102, 241, 0.45);
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transições */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Tipografia */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
-

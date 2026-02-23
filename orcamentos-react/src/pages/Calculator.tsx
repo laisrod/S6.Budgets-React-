@@ -6,10 +6,9 @@ import BudgetsList from '../components/organismos/BudgetsList'
 import { SERVICES } from '../config/ContentService'
 import { useBudget } from '../hooks/useBudget'
 import { Link } from 'react-router-dom'
-import AnnualDiscountToggle from '../components/molecules/AnnualDiscountToggle' //9.5.1
+import AnnualDiscountToggle from '../components/molecules/AnnualDiscountToggle'
 
 export default function Calculator() {
-  // 1 - Desestruturação do hook para pegar tudo que o hook exporta
   const {
     selectedIds,
     websitePages,
@@ -18,14 +17,12 @@ export default function Calculator() {
     setWebsitePages,
     setWebsiteLanguages,
     total,
-    originalTotal,
     budgets,
     addBudget,
     isAnnualDiscount,
-    toggleAnnualDiscount //9.5.2
-  } = useBudget() //O hook useBudget gerencia todo o estado da aplicação
+    toggleAnnualDiscount
+  } = useBudget()
 
-  // 2 - Retorna JSX da página
   return (
     <div className="container">
       <header className="calc-header">
@@ -36,20 +33,18 @@ export default function Calculator() {
       </header>
 
       <div className="services">  
-        {/* 2.1 - Mapeia cada serviço para checkbox */}
         {SERVICES.map(service => (
           <ServiceCheckbox
             key={service.id}
             id={service.id}
             label={service.label}
             price={service.price}
-            checked={selectedIds.includes(service.id)} // Verifica se serviço está selecionado
-            onChange={toggleService} // Função para alternar o estado do serviço
+            checked={selectedIds.includes(service.id)}
+            onChange={toggleService}
           />
         ))}
       </div>
 
-      {/* 2.2 - Renderiza WebsiteOptions se website selecionado */}
       {selectedIds.includes('website') && (
         <WebsiteOptions
           pages={websitePages}
@@ -59,27 +54,23 @@ export default function Calculator() {
         />
       )}
 
-      {/* 9.5.4 - Toggle de desconto anual */}
       <AnnualDiscountToggle
         isChecked={isAnnualDiscount}
         onChange={toggleAnnualDiscount}
         discount={20}
       />
 
-      {/* 2.3 - Exibe total calculado com desconto aplicado */}
       <Total 
         amount={total} 
-        originalAmount={isAnnualDiscount ? originalTotal : undefined}
+        originalAmount={isAnnualDiscount ? total : undefined}
         isAnnualDiscount={isAnnualDiscount}
       />
 
-      {/* 2.4 - Renderiza formulário para novo orçamento */}
       <QuoteForm 
       onSubmit={addBudget} 
-      isAnnualDiscount={isAnnualDiscount} //9.6.2 passa o estado de desconto anual
+      isAnnualDiscount={isAnnualDiscount}
       />
 
-      {/* 2.5 - Renderiza lista de orçamentos */}
       <BudgetsList 
       budgets={budgets} 
       />

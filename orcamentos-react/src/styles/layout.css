@@ -1,25 +1,53 @@
+/* ===========================
+   Layout
+   =========================== */
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
+/* ---- Container Geral ---- */
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: stretch;
   text-align: left;
+  padding: 2.5rem 2rem;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
+/* ---- Welcome (fullscreen) ---- */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-bg);
+}
+
+/* ---- Budgets Grid ---- */
 .budgets-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
 }
 
+/* ---- Responsividade ---- */
 @media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
   .budgets-header {
     flex-direction: column;
     align-items: flex-start;
@@ -43,3 +71,9 @@
   }
 }
 
+/* ---- Dark Mode Layout ---- */
+@media (prefers-color-scheme: dark) {
+  .welcome {
+    background: var(--gradient-dark-bg);
+  }
+}
