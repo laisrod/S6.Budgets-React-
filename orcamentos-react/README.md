@@ -1,207 +1,150 @@
-# Digital Services Budget Application
+Digital Services Budget Application
 
-A modern web application developed with **React** and **TypeScript** to create and manage budgets for digital services (SEO, Advertising, and Websites).
+A modern web application built with React and TypeScript to create and manage budgets for digital services such as SEO, Advertising, and Websites.
 
----
 
-## What is this project?
+What is this project
 
-This application allows users to:
+This application allows users to select digital services (SEO at 300 euros, Advertising at 400 euros, and Website at 500 euros), configure website options like pages and languages, apply an annual discount of 20 percent for budgets above 1000 euros, calculate totals automatically, create and save budgets, share URLs with specific configurations, and view budget history.
 
-- Select digital services (SEO €300, Advertising €400, Website €500)
-- Configure website options (pages and languages)
-- Apply annual discount (20% for budgets above €1,000)
-- Calculate totals automatically
-- Create and save budgets
-- Share URLs with specific configurations
-- View budget history
 
----
+Getting Started
 
-## Getting Started
+Prerequisites
 
-### Prerequisites
+Node.js version 18 or higher
+npm version 9 or higher
 
-- **Node.js** (version 18 or higher)
-- **npm** (version 9 or higher)
+Check your installation by running these commands in the terminal:
 
-**Check installation:**
-```bash
-node --version
-npm --version
-```
+  node --version
+  npm --version
 
----
 
-## Installation
+Installation
 
-1. **Install dependencies:**
-```bash
-npm install
-```
-Downloads all necessary libraries (React, TypeScript, Vite, etc.)
+1. Install dependencies:
 
-2. **Start development server:**
-```bash
-npm run dev
-```
-Opens at `http://localhost:5173` and automatically updates when you save changes.
+  npm install
 
-3. **Stop the server:**
-Press `Ctrl + C` in the terminal
+This downloads all necessary libraries including React, TypeScript, Vite, and others.
 
----
+2. Start the development server:
 
-## Available Scripts
+  npm run dev
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Starts development server |
-| `npm run build` | Creates optimized production build |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Checks for code errors |
-| `npm run lint:fix` | Automatically fixes errors |
-| `npm run type-check` | Checks TypeScript errors |
-| `npm run test` | Runs tests |
-| `npm run clean` | Removes temporary files |
+The app opens at http://localhost:5173 and automatically updates when you save changes.
 
----
+3. Stop the server by pressing Ctrl + C in the terminal.
 
-## Project Structure
 
-```
+Available Scripts
+
+npm run dev         Starts the development server
+npm run build       Creates an optimized production build
+npm run preview     Previews the production build locally
+npm run lint        Checks for code errors
+npm run lint:fix    Automatically fixes code errors
+npm run type-check  Checks TypeScript errors
+npm run test        Runs the test suite
+npm run test:watch  Runs tests in watch mode
+npm run clean       Removes temporary files
+
+
+Project Structure
+
 orcamentos-react/
-├── src/
-│   ├── components/
-│   │   ├── atoms/          # Small components (Button, Input)
-│   │   ├── molecules/      # Medium components (NumberInput)
-│   │   └── organismos/     # Large components (WebsiteOptions)
-│   ├── pages/              # Pages (Calculator, Welcome)
-│   ├── hooks/               # Custom hooks (useBudget)
-│   ├── services/           # Business functions (calculateBudget)
-│   ├── config/             # Configuration (ContentService)
-│   └── types/              # TypeScript types
-├── public/                 # Public files
-└── dist/                   # Production build (generated)
-```
+  src/
+    components/
+      atoms/          Small reusable components like Button and Input
+      molecules/      Medium components like NumberInput and CheckboxField
+      organismos/     Large composed components like WebsiteOptions and QuoteForm
+    pages/            Application pages including Calculator and Welcome
+    hooks/            Custom hooks like useBudget and useLocalStorage
+    services/         Business logic functions like calculateBudget
+    config/           Configuration files like ContentService
+    styles/           CSS files organized by concern (base, layout, components, utilities)
+    types/            TypeScript type definitions
+  public/             Static public files
+  dist/               Production build output (generated)
 
----
 
-## Features
+Features
 
-### 1. Service Selection
-- SEO (€300), Advertising Campaign (€400), Website (€500)
+Service Selection
+Users can choose from three digital services: SEO at 300 euros, Advertising Campaign at 400 euros, and Website at 500 euros. Multiple services can be selected at the same time.
 
-### 2. Website Configuration
-- Number of pages and languages
-- Additional cost: (pages + languages) × €30
+Website Configuration
+When the Website service is selected, users can configure the number of pages and languages. The additional cost is calculated as the sum of pages and languages multiplied by 30 euros.
 
-### 3. Annual Discount
-- 20% discount for budgets above €1,000
+Annual Discount
+A 20 percent discount is automatically applied when the total budget exceeds 1000 euros and the user enables the annual billing option.
 
-### 4. Shareable URLs
-Example: `?services=seo,website&pages=5&languages=2&annual=true`
+Shareable URLs
+Budget configurations are saved in the URL so they can be shared with others. For example, a URL might include parameters like services, pages, languages, and annual billing preference.
 
----
+Budget Management
+Users can create named budgets, save them locally in the browser, search through saved budgets, and sort them by name, date, or price.
 
-## Technologies
 
-- **React 19** - UI library
-- **TypeScript** - Typed JavaScript
-- **Vite** - Build tool
-- **React Router** - Navigation
-- **ESLint** - Code quality
-- **Vitest** - Testing
+Technologies
 
----
+React 19 for building the user interface
+TypeScript for type safety and better developer experience
+Vite as the build tool and development server
+React Router for client-side navigation
+ESLint for code quality and consistency
+Vitest for unit testing
 
-## Architecture: Atomic Design
 
-```
-ATOMS (Button, Input)
-    
-MOLECULES (NumberInput, CheckboxField)
-    
-ORGANISMS (WebsiteOptions, QuoteForm)
-    
-PAGES (Calculator, Welcome)
-```
+Architecture
 
-**Advantages:** Reusable components, organized code, easy maintenance
+This project follows the Atomic Design methodology to organize components into layers of increasing complexity.
 
----
+Atoms are the smallest building blocks such as Button, Input, Label, Checkbox, and Span. They handle a single responsibility and are highly reusable.
 
-## Important Concepts
+Molecules combine atoms into more functional units like NumberInput, CheckboxField, PriceDisplay, and HelpModal.
 
-### Hooks
-Special React functions:
-- `useState` - Stores values that can change
-- `useEffect` - Executes code when something changes
-- `useMemo` - Memoizes calculated values
-- `useCallback` - Memoizes functions
-- `useSearchParams` - Reads and updates URL
+Organisms are larger sections composed of molecules and atoms. These include WebsiteOptions, QuoteForm, ServiceCheckbox, BudgetsList, and Total.
 
-**Custom hooks:**
-- `useBudget` - Manages budget state
-- `useLocalStorage` - Saves data in browser
+Pages are full views that compose organisms together. The application has two pages: Welcome and Calculator.
 
-### State
-Data that can change and automatically updates the screen:
-```typescript
-const [count, setCount] = useState(0)
-```
+This architecture promotes reusable components, organized code, and easy maintenance.
 
-### Props
-Data that a component receives from outside:
-```typescript
-<Button label="Click" onClick={handleClick} />
-```
 
----
+Custom Hooks
 
-## Testing
+useBudget manages the entire budget state including selected services, website options, annual discount, and the list of saved budgets.
 
-```bash
-npm run test          # Run tests
-npm run test:watch    # Watch mode (updates automatically)
-```
+useLocalStorage provides persistent storage in the browser so that saved budgets survive page reloads.
 
----
 
-## Troubleshooting
+Testing
 
-**"npm install" doesn't work:**
-- Check Node.js: `node --version`
-- Clear cache: `npm cache clean --force`
-- Delete `node_modules` and try again
+Run the full test suite:
 
-**TypeScript errors:**
-- Run: `npm run type-check`
-- Check types and error messages
+  npm run test
 
-**Port already in use:**
-- Close other applications using port 5173
-- Or change the port in `vite.config.ts`
+Run tests in watch mode so they re-run automatically when files change:
 
----
+  npm run test:watch
 
-## Learning Resources
 
-- [React](https://react.dev) - Official documentation
-- [TypeScript](https://www.typescriptlang.org) - Documentation
-- [Vite](https://vite.dev) - Documentation
-- [React Router](https://reactrouter.com) - Documentation
+Troubleshooting
 
----
+If npm install does not work, check your Node.js version with node --version, clear the npm cache with npm cache clean --force, delete the node_modules folder, and try again.
 
-## Next Steps
+If you see TypeScript errors, run npm run type-check and review the error messages for details about the types involved.
 
-- Add new services
-- Create new components
-- Improve design
-- Add more tests
-- Publish online
+If the port is already in use, close other applications that may be using port 5173 or change the port in vite.config.ts.
 
----
 
-This is an educational project developed for learning purposes.
+Learning Resources
+
+React official documentation at https://react.dev
+TypeScript documentation at https://www.typescriptlang.org
+Vite documentation at https://vite.dev
+React Router documentation at https://reactrouter.com
+
+
+This is an educational project developed as part of the IT Academy Sprint 6 curriculum.
