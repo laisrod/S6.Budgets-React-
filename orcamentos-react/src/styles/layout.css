@@ -8,16 +8,17 @@
   text-align: center;
 }
 
-/* ---- Container Geral ---- */
+/* ---- Container Geral (Calculadora) ---- */
 .container {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   align-items: stretch;
   text-align: left;
-  padding: 2.5rem 2rem;
-  max-width: 860px;
+  padding: 2.5rem 2rem 4rem;
+  max-width: 720px;
   margin: 0 auto;
+  min-height: 100vh;
 }
 
 /* ---- Welcome (fullscreen) ---- */
